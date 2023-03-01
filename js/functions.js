@@ -1,19 +1,20 @@
 // 1 Функция сравнение строки
 
 const checkLength = (string, number) => string.length <= number;
-
+checkLength('fff',3);
 // 2 задание
 
-const Palindrome = (words) =>
-  words.split("").reverse().join("").toLowerCase() === words.toLowerCase();
-
+const checkPalindrome = (words) =>
+  words.split('').reverse().join('').toLowerCase() === words.toLowerCase();
+checkPalindrome('топот');
 // 3 задание
 
-const numbers = (string) => parseInt(string.replace(/[^\d]/g, ""));
+const getNumbers = (string) => parseInt(string.replace(/[^\d]/g, ''), 10);
+getNumbers('2023 год');
 
 //  4 задание
 
-const myPadStart = (string, minLength, pad) => {
+const getMyPadStart = (string, minLength, pad) => {
   const actualPad = minLength - string.length;
 
   if (actualPad <= 0) {
@@ -26,4 +27,4 @@ const myPadStart = (string, minLength, pad) => {
     string
   );
 };
-myPadStart("q", 4, "we");
+getMyPadStart('q', 4, 'we');
