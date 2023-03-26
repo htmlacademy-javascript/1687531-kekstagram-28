@@ -1,26 +1,21 @@
-import createObjects from './data.js';
-
-const data = createObjects();
-
 function render (userData){
-  userData.array.forEach((item) => {
-    const template = `
-           <template id="picture">
+  userData.forEach((item) => {
+    const template = document.createElement('template');
+    template.innerHTML = `
               <a href="#" class="picture">
-                 <img class="picture__img" src="${item.image}" width="182" height="182" alt="Случайная фотография">
+                 <img class="picture__img" src="${item.url}" width="182" height="182" alt="Случайная фотография">
                    <p class="picture__info">
-                      <span class="picture__comments">${item.comments}</span>
-                       <span class="picture__likes">${item.likes}</span>
-                     </p>
+                      <span class="picture__comments">${item.comments.length}</span>
+                      <span class="picture__likes">${item.likes}</span>
+                    </p>
               </a>
-            </template>
- `;
+     `;
 
-    document.body.insertAdjacentHTML('beforeend' , template);
+    const picture = document.querySelector('.pictures');
+    picture.append(template.content);
   });
 
 }
 
-render(data);
 
-export {render};
+export default render;
