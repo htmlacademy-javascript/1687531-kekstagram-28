@@ -44,7 +44,5 @@ const createObjects = () => {
   return objects;
 };
 
-// createObjects();
-
 
 export default createObjects;
