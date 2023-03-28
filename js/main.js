@@ -1,5 +1,6 @@
 import createObjects from './data.js';
+import render from './rendering.js';
 
+const data = createObjects();
 
-createObjects();
-
+render(data);
