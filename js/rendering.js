@@ -5,7 +5,7 @@ function render (userData){
   userData.forEach((item) => {
     const template = document.createElement('template');
     template.innerHTML = `
-              <a href="#" class="picture">
+              <a href="#" class="picture" data-id="${item.id}">
                  <img
                     class="picture__img"
                     src="${item.url}"
