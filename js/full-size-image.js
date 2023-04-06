@@ -76,9 +76,9 @@ const openShowMoreButton = () => {
 const openModalByClickHandler = (evt) => {
   const target = evt.target;
   const picture = target.closest('.picture');
-  const dataId = picture.getAttribute('data-id');
 
   if (picture?.classList.contains('picture')){
+    const dataId = picture.getAttribute('data-id');
     evt.preventDefault();
     setDataForGalleryFrom(picture, dataId);
     renderElementFromDataBy(dataId);
