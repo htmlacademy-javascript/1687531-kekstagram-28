@@ -1,5 +1,6 @@
-import {getLikes , getRandomDescriptions , getRandomName , getRandomComments , getRandomInt , getID} from './utils.js';
+import { getRandomDescriptions, getRandomName, getRandomComments, getRandomInt, getID } from './utils.js';
 
+const MAX_IMAGES_COUNT = 25;
 
 const createComment = (id) => ({
   id,
@@ -10,7 +11,7 @@ const createComment = (id) => ({
 
 const createComments = () => {
   const comments = [];
-  const commentsCount = getRandomInt(1, 10);
+  const commentsCount = getRandomInt(1,20);
 
   for (let i = 1; i <= commentsCount; i++) {
     comments.push(createComment(i));
@@ -21,7 +22,7 @@ const createComments = () => {
 
 const createObject = () => {
   const id = getID();
-  const likes = getLikes();
+  const likes = getRandomInt();
   const description = getRandomDescriptions();
   const comments = createComments();
 
@@ -37,7 +38,7 @@ const createObject = () => {
 const createObjects = () => {
   const objects = [];
 
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < MAX_IMAGES_COUNT; i++) {
     objects.push(createObject());
   }
 

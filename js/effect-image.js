@@ -87,22 +87,25 @@ const updateSlider = () => {
   }
 };
 
-const onEffectsChange = (evt) => {
+const effectsChangeHandler = (evt) => {
   if (!evt.target.classList.contains('effects__radio')) {
     return;
   }
+
   chosenEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
   image.className = `effects__preview--${chosenEffect.name}`;
   updateSlider();
 };
 
-const onSliderUpdate = () => {
+const sliderUpdateHandler = () => {
   const sliderValue = slider.noUiSlider.get();
+
   if (isDefault()) {
     image.style.filter = DEFAULT_EFFECT.style;
   } else {
     image.style.filter = `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
   }
+
   effectLevel.value = sliderValue;
 };
 
@@ -120,9 +123,10 @@ noUiSlider.create(slider, {
   step: DEFAULT_EFFECT.step,
   connect: 'lower',
 });
+
 hideSlider();
 
-effects.addEventListener('change', onEffectsChange);
-slider.noUiSlider.on('update', onSliderUpdate);
+effects.addEventListener('change', effectsChangeHandler);
+slider.noUiSlider.on('update', sliderUpdateHandler);
 
 export { resetEffects };

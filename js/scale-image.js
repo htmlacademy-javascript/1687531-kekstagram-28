@@ -16,18 +16,22 @@ const scaleImage = (value) => {
 const onSmallerButtonClick = () => {
   const currentValue = parseInt(scaleInputForm.value, 10);
   let newValue = currentValue - SCALE_STEP;
+
   if (newValue < MIN_SCALE) {
     newValue = MIN_SCALE;
   }
+
   scaleImage(newValue);
 };
 
 const onBiggerButtonClick = () => {
   const currentValue = parseInt(scaleInputForm.value, 10);
   let newValue = currentValue + SCALE_STEP;
+
   if (newValue > MAX_SCALE) {
     newValue = MAX_SCALE;
   }
+
   scaleImage(newValue);
 };
 

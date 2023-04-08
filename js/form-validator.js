@@ -1,56 +1,54 @@
 import '../vendor/pristine/pristine.min.js';
-import {resetScale} from './scale-image.js';
-import {resetEffects} from './effect-image.js';
+import { resetEffects } from './effect-image.js';
+import { resetScale } from './scale-image.js';
+
+const HASHTAGS_RULES = /^#[a-zа-яё0-9]{1,19}$/i;
+const MAX_COUNT_HASHTAG = 5;
+const MAX_COUNT_TEXT = 140;
+const HASHTAG_ERROR_TEXT = 'Некорректно заполнено поле хештегов';
+const COMMENT_ERROR_TEXT = 'Превышено количество символов';
 
 const form = document.getElementById('upload-select-image');
-const fileField = document.querySelector('#upload-file');
+const fileField = document.getElementById('upload-file');
 const overlay = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
 const cancelButton = document.querySelector('#upload-cancel');
 const textHashtags = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
 
-const HASHTAGS_RULES = /^#[a-zа-яё0-9]{1,19}$/i;
-const MAX_COUNT_HASTAG = 5;
-const TASK_ERROR_TEXT = 'Некорректно заполнено поле хештегов';
-const MAX_COUNT_TEXT = 140;
-const TASK_ERROR_LENGTH = 'Превышено количество символов';
-
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper__eror'
+  errorTextClass: 'img-upload__field-wrapper__error'
 });
 
-const showModalHandler = () => {
+const openModalHandler = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
   resetScale();
   resetEffects();
-  document.addEventListener('keydown', hideModalByEscHandler);
 };
 
-const hideModalHandler = () => {
+const closeModalHandler = () => {
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
-  document.removeEventListener('keydown', hideModalByEscHandler);
 };
 
-function hideModalByEscHandler (evt) {
-  const {activeElement} = document;
+function closeModalByEscHandler(evt) {
+  const { activeElement } = document;
   const escIgnore = [textHashtags, textDescription];
 
-  if(evt.key === 'Escape' && !escIgnore.includes(activeElement)){
-    hideModalHandler();
+  if(evt.key === 'Escape' && !escIgnore.includes(activeElement)) {
+    closeModalHandler();
   }
 }
 
 const isValidTag = (tag) => HASHTAGS_RULES.test(tag);
 
-const hasValidCount = (tags) => tags.length <= MAX_COUNT_HASTAG;
+const hasValidCount = (tags) => tags.length <= MAX_COUNT_HASHTAG;
 
 const hasUniqueTags = (tags) => {
-  const lowerCaseTags = (tags).map((tag) => tag.toLowerCase());
+  const lowerCaseTags = tags.map((tag) => tag.toLowerCase());
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
@@ -65,27 +63,30 @@ const validateTags = (value) => {
 pristine.addValidator (
   textHashtags,
   validateTags,
-  TASK_ERROR_TEXT
+  HASHTAG_ERROR_TEXT
 );
 
-const checkStringLenght = (text) => text.length <= MAX_COUNT_TEXT;
+const checkStringLength = (text) => text.length <= MAX_COUNT_TEXT;
 
 pristine.addValidator(
   textDescription,
-  checkStringLenght,
-  TASK_ERROR_LENGTH
+  checkStringLength,
+  COMMENT_ERROR_TEXT
 );
 
-const onFormSubmit = (evt) => {
+const formSubmitHandler = (evt) => {
   evt.preventDefault();
-  pristine.validate();
-  if(validateTags(textHashtags.value) && checkStringLenght(textDescription.value)) {
+
+  if(pristine.validate()) {
     form.submit();
-  } else {
-    evt.preventDefault();
   }
 };
 
-form.addEventListener('submit', onFormSubmit);
-fileField.addEventListener('change', showModalHandler);
-cancelButton.addEventListener('click', hideModalHandler);
+const addListenersForFormValidator = () => {
+  form.addEventListener('submit', formSubmitHandler);
+  fileField.addEventListener('change', openModalHandler);
+  cancelButton.addEventListener('click', closeModalHandler);
+  document.addEventListener('keydown', closeModalByEscHandler);
+};
+
+export default addListenersForFormValidator;
