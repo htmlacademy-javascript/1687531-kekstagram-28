@@ -1,12 +1,12 @@
 import '../vendor/pristine/pristine.min.js';
-import {resetEffects} from './effect-image.js';
-import {resetScale} from './scale-image.js';
+import { resetEffects } from './effect-image.js';
+import { resetScale } from './scale-image.js';
 
 const HASHTAGS_RULES = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_COUNT_HASHTAG = 5;
+const MAX_COUNT_TEXT = 140;
 const HASHTAG_ERROR_TEXT = 'Некорректно заполнено поле хештегов';
 const COMMENT_ERROR_TEXT = 'Превышено количество символов';
-const MAX_COUNT_TEXT = 140;
 
 const form = document.getElementById('upload-select-image');
 const fileField = document.getElementById('upload-file');

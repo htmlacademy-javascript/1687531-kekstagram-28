@@ -1,6 +1,4 @@
-import {DESCRIPTIONS , NAMES , COMMENTS} from './constants.js';
-
-const getLikes = (min = 15, max = 200) => Math.floor(Math.random() * (max - min + 1) + min);
+import { DESCRIPTIONS , NAMES , COMMENTS } from './constants.js';
 
 const getIdGenerator = () => {
   let number = 1;
@@ -18,4 +16,4 @@ const getRandomComments = () => COMMENTS[(Math.random() * COMMENTS.length) | 0];
 
 const getRandomInt = (min = 15, max = 200) => Math.floor(Math.random() * (max - min + 1) + min);
 
-export {getLikes , getRandomDescriptions , getRandomName , getRandomComments , getRandomInt , getID};
+export { getRandomDescriptions , getRandomName , getRandomComments , getRandomInt , getID };
