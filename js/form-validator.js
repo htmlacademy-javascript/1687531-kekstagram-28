@@ -1,6 +1,8 @@
 import '../vendor/pristine/pristine.min.js';
 import { resetEffects } from './effect-image.js';
 import { resetScale } from './scale-image.js';
+import { sendImageToServer } from './network.js';
+import { showModal, showErrorModal, showSuccessModal } from './modal.js';
 
 const HASHTAGS_RULES = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_COUNT_HASHTAG = 5;
@@ -22,24 +24,25 @@ const pristine = new Pristine(form, {
   errorTextClass: 'img-upload__field-wrapper__error'
 });
 
-const openModalHandler = () => {
+const openFormHandler = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
-  resetScale();
-  resetEffects();
 };
 
-const closeModalHandler = () => {
+const closeFormHandler = () => {
+  form.reset();
+  resetScale();
+  resetEffects();
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
 };
 
-function closeModalByEscHandler(evt) {
+function closeFormByEscHandler(evt) {
   const { activeElement } = document;
   const escIgnore = [textHashtags, textDescription];
 
   if(evt.key === 'Escape' && !escIgnore.includes(activeElement)) {
-    closeModalHandler();
+    closeFormHandler();
   }
 }
 
@@ -78,15 +81,18 @@ const formSubmitHandler = (evt) => {
   evt.preventDefault();
 
   if(pristine.validate()) {
-    form.submit();
+    sendImageToServer(form)
+      .then(() => showModal(showSuccessModal('Изображение успешно загружено', 'Круто!')))
+      .catch(() => showModal(showErrorModal('Ошибка загрузки файла', 'Попробовать ещё раз')))
+      .finally(closeFormHandler);
   }
 };
 
 const addListenersForFormValidator = () => {
   form.addEventListener('submit', formSubmitHandler);
-  fileField.addEventListener('change', openModalHandler);
-  cancelButton.addEventListener('click', closeModalHandler);
-  document.addEventListener('keydown', closeModalByEscHandler);
+  fileField.addEventListener('change', openFormHandler);
+  cancelButton.addEventListener('click', closeFormHandler);
+  document.addEventListener('keydown', closeFormByEscHandler);
 };
 
 export default addListenersForFormValidator;

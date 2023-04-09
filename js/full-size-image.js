@@ -1,5 +1,3 @@
-import data from './data.js';
-
 const REMAINING_COMMENTS = [];
 const MAX_VISIBLE_COMMENTS = 5;
 const MAX_LOADING_COMMENTS = 5;
@@ -17,7 +15,7 @@ const bigPictureSocialComments = document.querySelector('.social__comments');
 const bigPictureSocialCommentsLoader = document.querySelector('.social__comments-loader');
 const cancel = document.querySelector('.big-picture__cancel');
 
-const setDataForGalleryFrom = (element, id) => {
+const setDataForGalleryFromElement = (element, id, data) => {
   const currentObject = data.find((item) => item.id === +id);
   const currentCommentsLength = currentObject.comments.length;
 
@@ -43,7 +41,7 @@ const renderComment = (avatar, name, message) => `
     </li>
 `;
 
-function renderElementFromDataBy(id) {
+function renderElementFromDataByID(id, data) {
   const currentObject = data.find((item) => item.id === +id);
   bigPictureCaption.textContent = currentObject.description;
   const currentComments = currentObject.comments;
@@ -58,7 +56,7 @@ function renderElementFromDataBy(id) {
   });
 }
 
-const openShowMoreButton = () => {
+const uploadingCommentsHandler = () => {
   const currentComments = REMAINING_COMMENTS.splice(0, MAX_LOADING_COMMENTS);
 
   currentComments.forEach((comment) => {
@@ -70,15 +68,15 @@ const openShowMoreButton = () => {
   bigPictureCommentsCountFrom.textContent = showComments;
 };
 
-const openModalByClickHandler = (evt) => {
+const openModalByClickHandler = (evt, data) => {
   const target = evt.target;
   const picture = target.closest('.picture');
 
   if (picture?.classList.contains('picture')) {
     evt.preventDefault();
     const dataId = picture.getAttribute('data-id');
-    setDataForGalleryFrom(picture, dataId);
-    renderElementFromDataBy(dataId);
+    setDataForGalleryFromElement(picture, dataId, data);
+    renderElementFromDataByID(dataId, data);
 
     document.body.classList.add('modal-open');
     bigPicture.classList.remove('hidden');
@@ -96,11 +94,11 @@ const closeModalByEscHandler = (evt) => evt.code === 'Escape' && hideModal();
 
 const closeModalByClickHandler = () => hideModal();
 
-const addListenersForGallery = () => {
-  pictures.addEventListener('click', openModalByClickHandler);
+const addListenersForGallery = (data) => {
+  pictures.addEventListener('click', (evt) => openModalByClickHandler(evt, data));
   cancel.addEventListener('click', closeModalByClickHandler);
   document.addEventListener('keydown', closeModalByEscHandler);
-  bigPictureSocialCommentsLoader.addEventListener('click', openShowMoreButton);
+  bigPictureSocialCommentsLoader.addEventListener('click', uploadingCommentsHandler);
 };
 
 export default addListenersForGallery;
