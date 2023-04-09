@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Александр Фалин](https://up.htmlacademy.ru/javascript/28/user/1687531).
-* Наставник: `Неизвестно`.
+* Наставник: `Денис Лопатин` (https://htmlacademy.ru/profile/denislopatin).
 
 ---
 
