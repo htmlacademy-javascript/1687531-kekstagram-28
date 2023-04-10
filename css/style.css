@@ -1408,3 +1408,8 @@ main {
 .hidden {
   display: none;
 }
+
+.pristine-error{
+  margin-bottom: 6px;
+  margin-top: 5px;
+}
