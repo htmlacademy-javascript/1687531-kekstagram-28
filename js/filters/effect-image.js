@@ -1,4 +1,4 @@
-import '../vendor/nouislider/nouislider.js';
+import '../../vendor/nouislider/nouislider.js';
 
 const EFFECTS = [
   {
@@ -87,12 +87,12 @@ const updateSlider = () => {
   }
 };
 
-const effectsChangeHandler = (evt) => {
-  if (!evt.target.classList.contains('effects__radio')) {
+const effectsChangeHandler = ({ target }) => {
+  if (!target.classList.contains('effects__radio')) {
     return;
   }
 
-  chosenEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
+  chosenEffect = EFFECTS.find((effect) => effect.name === target.value);
   image.className = `effects__preview--${chosenEffect.name}`;
   updateSlider();
 };

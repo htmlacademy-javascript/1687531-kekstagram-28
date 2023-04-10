@@ -1,16 +1,18 @@
-import { getImagesFromServer } from './network.js';
-import render from './rendering.js';
-import addListenersForGallery from './full-size-image.js';
-import addListenersForFormValidator from './form-validator.js';
-import { showErrorModal, showModal } from './modal.js';
+import { getImagesFromServer } from './network/network.js';
+import { showModalOnAppError, showFilters } from './utils/utils.js';
+import renderingImages from './view/rendering-images.js';
+import addListenersForGallery from './core/full-size-image.js';
+import addListenersForFormValidator from './core/form.js';
+import addListenersForFilter from './filters/filters.js';
 
 async function app() {
   const data = await getImagesFromServer();
-  render(data);
+  renderingImages(data);
+  addListenersForFilter(data);
   addListenersForGallery(data);
   addListenersForFormValidator();
 }
 
-app().catch(() => {
-  showModal(showErrorModal('Возникла ошибка. Данные не могут быть отображены', 'Закрыть'));
-});
+app()
+  .then(showFilters)
+  .catch(showModalOnAppError);
