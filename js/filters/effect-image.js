@@ -100,11 +100,8 @@ const effectsChangeHandler = ({ target }) => {
 const sliderUpdateHandler = () => {
   const sliderValue = slider.noUiSlider.get();
 
-  if (isDefault()) {
-    image.style.filter = DEFAULT_EFFECT.style;
-  } else {
-    image.style.filter = `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
-  }
+  image.style.filter = isDefault() ?
+    DEFAULT_EFFECT.style : `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
 
   effectLevel.value = sliderValue;
 };

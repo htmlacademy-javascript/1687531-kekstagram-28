@@ -28,10 +28,10 @@ const render = (data) => {
   picture.append(fragment);
 };
 
-const renderingImages = (data, flag = 'default') => {
+const renderImages = (data, flag = 'default') => {
   deleteAllNodesBySelector('picture');
   sortArrayByFlag(data, flag);
   render(data);
 };
 
-export default renderingImages;
+export default renderImages;

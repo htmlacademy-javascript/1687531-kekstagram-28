@@ -16,20 +16,21 @@ const showSuccessModal = (title, buttonText) => `
   </section>
 `;
 
-const showModal = (modalHtml) => {
-  const closeAppModalByClickHandler = ({ target }) => {
-    if (target.classList.contains('app-modal') || target.classList.contains('app-modal__button')) {
-      document.querySelector('section.app-modal').remove();
-      removeEventListener('click', closeAppModalByClickHandler);
-    }
-  };
-  const closeAppModalByEscapeHandler = ({ code }) => {
-    if (code === 'Escape') {
-      document.querySelector('section.app-modal').remove();
-      removeEventListener('keydown', closeAppModalByClickHandler);
-    }
-  };
+const closeAppModalByClickHandler = ({ target }) => {
+  if (target.classList.contains('app-modal') || target.classList.contains('app-modal__button')) {
+    document.querySelector('section.app-modal').remove();
+    removeEventListener('click', closeAppModalByClickHandler);
+  }
+};
 
+const closeAppModalByEscapeHandler = ({ code }) => {
+  if (code === 'Escape') {
+    document.querySelector('section.app-modal').remove();
+    removeEventListener('keydown', closeAppModalByEscapeHandler);
+  }
+};
+
+const showModal = (modalHtml) => {
   document.body.insertAdjacentHTML('beforeend', modalHtml);
   document.addEventListener('click', closeAppModalByClickHandler);
   document.addEventListener('keydown', closeAppModalByEscapeHandler);

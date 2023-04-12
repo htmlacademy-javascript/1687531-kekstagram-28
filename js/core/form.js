@@ -36,9 +36,9 @@ const closeFormHandler = () => {
 
 function closeFormByEscHandler({ code }) {
   const { activeElement } = document;
-  const escIgnore = [textHashtags, textDescription];
+  const escIgnores = [textHashtags, textDescription];
 
-  if(code === 'Escape' && !escIgnore.includes(activeElement)) {
+  if(code === 'Escape' && !escIgnores.includes(activeElement)) {
     closeFormHandler();
     resetDataFromForm();
   }

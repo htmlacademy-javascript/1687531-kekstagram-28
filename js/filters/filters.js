@@ -1,14 +1,14 @@
-import renderingImages from '../view/rendering-images.js';
+import renderImages from '../view/rendering-images.js';
 import { deleteClassFromNodesBySelector } from '../utils/utils.js';
 import debounce from '../utils/debounce.js';
 
 const imgFiltersForm = document.querySelector('.img-filters__form');
 
-const renderByDefaultHandler = (data) => renderingImages(data);
+const renderByDefaultHandler = (data) => renderImages(data);
 
-const renderByRandomHandler = (data) => renderingImages(data, 'random');
+const renderByRandomHandler = (data) => renderImages(data, 'random');
 
-const renderByDiscussedHandler = (data) => renderingImages(data, 'discussed');
+const renderByDiscussedHandler = (data) => renderImages(data, 'discussed');
 
 const filterSelectionHandler = (data, { id }) => {
   switch (id) {
@@ -24,11 +24,11 @@ const filterSelectionHandler = (data, { id }) => {
 };
 
 const filterSelectionPrepare = ({ target }, data) => {
-  const copy = [...data];
+  const copies = [...data];
   deleteClassFromNodesBySelector('img-filters__button', 'img-filters__button--active');
   target.classList.add('img-filters__button--active');
 
-  filterSelectionHandler(copy, target);
+  filterSelectionHandler(copies, target);
 };
 
 const addListenersForFilter = (data) => {
